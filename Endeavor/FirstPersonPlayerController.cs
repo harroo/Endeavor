@@ -35,6 +35,7 @@ public class FirstPersonPlayerController : MonoBehaviour {
     [Header("Camera FOV")]
     public bool useZoom = false;
     public bool useLeaning = false;
+    public float leanAmount = 8;
 
     private float defaultFOV, viewFieldCache;
     private Camera headCam;
@@ -164,7 +165,7 @@ public class FirstPersonPlayerController : MonoBehaviour {
         } else if (useLeaning && running) {
 
             viewFieldCache += Time.deltaTime * 64;
-            viewFieldCache = viewFieldCache > 8 ? 8 : viewFieldCache;
+            viewFieldCache = viewFieldCache > leanAmount ? leanAmount : viewFieldCache;
             headCam.fieldOfView = defaultFOV + viewFieldCache;
 
         } else if (useLeaning) {
