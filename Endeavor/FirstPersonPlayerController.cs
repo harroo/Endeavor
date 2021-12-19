@@ -10,7 +10,6 @@ public class FirstPersonPlayerController : MonoBehaviour {
     [Header("Movemenmt")]
     public float walkSpeed = 4.0f;
     public float runSpeed = 6.0f;
-    public float rollOffSpeed = 4.0f;
     public float jumpHeight = 1.4f;
     public float gravity = 32.0f;
     public bool runInAllDirections = false;
@@ -75,6 +74,7 @@ public class FirstPersonPlayerController : MonoBehaviour {
             if (!Cursor.visible) {
 
                 Cursor.lockState = CursorLockMode.Locked;
+                
             } else {
 
                 Cursor.lockState = CursorLockMode.None;
