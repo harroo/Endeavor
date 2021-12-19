@@ -79,24 +79,29 @@ Now for the more specific options.
 ### "Looking"
 
 `Sensitivity`: The mouse sensitivity.
+
 `Head`: The Camera object attached to the player.
 
 ### "Camera Bobbing"
 
 `Use Bobbing`: When disabled the Camera will not bob when the Player moves around.
+
 `Bob Speed`: The speed at which the Camera shall bob.
+
 `Intensity`: The intensity of the bobbing.
 
 ### "Camera FOV"
 
 `Use Zoom`: When enabled, pressing C or the Middle-Mouse-Button will zoom the Camera in, like Optifine.
+
 `Use Leaning`: When this is enabled, the Camera will zoom out slightly when the Player is running.
+
 `Lean Amount`: The level to which the outward zoom will take place. `8` or `16` works rather well. See what you like!
 
 
 ## Others
 
-At this point the other components in this Repository are not as superb and polished as teh FirstPersonPlayerController, they're more of a base-line for you to create your own. If you do please feel free to contribute!
+At this point the other components in this Repository are not as superb and polished as the FirstPersonPlayerController, they're more of a base-line for you to create your own. If you do please feel free to contribute!
 
 
 If you would like to contact me, https://discord.gg/feRRmykReU feel free to join.
