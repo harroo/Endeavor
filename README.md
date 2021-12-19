@@ -65,8 +65,11 @@ Feel free to copy these Methods as they may be useful.
 These are rather self-explanatory, but I shall do so regardless.
 
 `Walk Speed`: The Speed at which the Player will move.
+
 `Run Speed`: The Speed the Player will run at.
+
 `Jump Height`: The Height at which the Player will jump.
+
 `Gravity`: The downwards influence.
 
 Now for the more specific options.
