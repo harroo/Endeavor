@@ -86,36 +86,44 @@ public class FirstPersonPlayerController : MonoBehaviour {
 
         controller.stepOffset = controller.isGrounded ? 0.5f : 0.3f;
 
-        if (controller.isGrounded) {
+        if (!Cursor.visible) {
 
-            moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            if (controller.isGrounded) {
 
-            moveDirection = transform.TransformDirection(moveDirection);
-            moveDirection *= moveSpeed;
+                moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
-            if (Input.GetKey(KeyCode.Space))
-                moveDirection.y = Mathf.Sqrt(jumpHeight * 2.0f * gravity);
+                moveDirection = transform.TransformDirection(moveDirection);
+                moveDirection *= moveSpeed;
+
+                if (Input.GetKey(KeyCode.Space))
+                    moveDirection.y = Mathf.Sqrt(jumpHeight * 2.0f * gravity);
+
+            } else {
+
+                moveCache = new Vector3(moveSpeed, moveDirection.y, moveSpeed);
+                moveDirection = Vector3.Lerp(moveDirection, Vector3.zero, 0.25f * Time.deltaTime);
+                moveDirection.y = moveCache.y;
+
+                moveDirection = transform.InverseTransformDirection(moveDirection);
+
+                moveDirection += new Vector3(
+                    Input.GetAxis("Horizontal") * 20 * Time.deltaTime, 0,
+                    Input.GetAxis("Vertical") * 20 * Time.deltaTime
+                );
+
+                moveDirection.x = Mathf.Clamp(moveDirection.x, -moveSpeed, moveSpeed);
+                moveDirection.z = Mathf.Clamp(moveDirection.z, -moveSpeed, moveSpeed);
+
+                moveDirection = transform.TransformDirection(moveDirection);
+
+                if (Physics.Raycast(transform.position, Vector3.up, 0.82f))
+                    moveDirection.y = -0.1f;
+            }
 
         } else {
 
-            moveCache = new Vector3(moveSpeed, moveDirection.y, moveSpeed);
-            moveDirection = Vector3.Lerp(moveDirection, Vector3.zero, 0.25f * Time.deltaTime);
-            moveDirection.y = moveCache.y;
-
-            moveDirection = transform.InverseTransformDirection(moveDirection);
-
-            moveDirection += new Vector3(
-                Input.GetAxis("Horizontal") * 20 * Time.deltaTime, 0,
-                Input.GetAxis("Vertical") * 20 * Time.deltaTime
-            );
-
-            moveDirection.x = Mathf.Clamp(moveDirection.x, -moveSpeed, moveSpeed);
-            moveDirection.z = Mathf.Clamp(moveDirection.z, -moveSpeed, moveSpeed);
-
-            moveDirection = transform.TransformDirection(moveDirection);
-
-            if (Physics.Raycast(transform.position, Vector3.up, 0.82f))
-                moveDirection.y = -0.1f;
+            moveDirection.x = 0;
+            moveDirection.z = 0;
         }
 
         moveDirection.y -= gravity * Time.deltaTime;
