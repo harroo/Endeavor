@@ -50,7 +50,7 @@ public void LockCursor ( ) {
 }
 
 // Enables the Cursor and it's visibility.
-public void LockCursor ( ) {
+public void UnlockCursor ( ) {
 
     Cursor.visible = true ;
 
