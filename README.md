@@ -76,6 +76,8 @@ Now for the more specific options.
 
 `Run In All Directions`: When this is enabled the Player will be able to run sideways and backwards, as apposed to only being able to run forwards.
 
+**Note** You must set the Player Game-Object Layer to "Ignore Raycast". Otherwise it'll fall in an obscure manour. 
+
 ### "Looking"
 
 `Sensitivity`: The mouse sensitivity.
