@@ -13,6 +13,7 @@ public class FirstPersonPlayerController : MonoBehaviour {
     public float jumpHeight = 1.4f;
     public float gravity = 32.0f;
     public bool runInAllDirections = false;
+    public bool touchMode = false;
 
     private Vector3 moveDirection, moveCache;
     private CharacterController controller;
@@ -74,7 +75,7 @@ public class FirstPersonPlayerController : MonoBehaviour {
             if (!Cursor.visible) {
 
                 Cursor.lockState = CursorLockMode.Locked;
-                
+
             } else {
 
                 Cursor.lockState = CursorLockMode.None;
@@ -86,16 +87,17 @@ public class FirstPersonPlayerController : MonoBehaviour {
 
         controller.stepOffset = controller.isGrounded ? 0.5f : 0.3f;
 
-        if (!Cursor.visible) {
+        if (!Cursor.visible || touchMode) {
 
             if (controller.isGrounded) {
 
-                moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+                // moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+                moveDirection = new Vector3(Endeavor.Input.Horizontal, 0, Endeavor.Input.Vertical);
 
                 moveDirection = transform.TransformDirection(moveDirection);
                 moveDirection *= moveSpeed;
 
-                if (Input.GetKey(KeyCode.Space))
+                if (Endeavor.Input.Jump)
                     moveDirection.y = Mathf.Sqrt(jumpHeight * 2.0f * gravity);
 
             } else {
@@ -107,8 +109,8 @@ public class FirstPersonPlayerController : MonoBehaviour {
                 moveDirection = transform.InverseTransformDirection(moveDirection);
 
                 moveDirection += new Vector3(
-                    Input.GetAxis("Horizontal") * 20 * Time.deltaTime, 0,
-                    Input.GetAxis("Vertical") * 20 * Time.deltaTime
+                    Endeavor.Input.Horizontal * 20 * Time.deltaTime, 0,
+                    Endeavor.Input.Vertical * 20 * Time.deltaTime
                 );
 
                 moveDirection.x = Mathf.Clamp(moveDirection.x, -moveSpeed, moveSpeed);
@@ -130,7 +132,37 @@ public class FirstPersonPlayerController : MonoBehaviour {
         controller.Move(moveDirection * Time.deltaTime);
     }
 
+    private Vector3 touchPosCache;
+
     private void UpdateLooking () {
+
+        if (touchMode) {
+
+            // if (Input.GetMouseButton(0)) {
+            foreach (Touch touch in Input.touches) {
+
+                if (touch.position.x < Screen.width / 2) return;
+
+                if (touch.phase == TouchPhase.Began) {
+
+                    touchPosCache = touch.position;
+
+                } else if (touch.phase == TouchPhase.Moved) {
+
+                    yaw += touch.position.x - touchPosCache.x;
+                    pitch -= touch.position.y - touchPosCache.y;
+
+                    pitch = Mathf.Clamp(pitch, -90.0f, 90.0f);
+
+                    head.eulerAngles = new Vector3(pitch, transform.eulerAngles.y, 0);
+                    transform.localEulerAngles = new Vector3(0, yaw, 0);
+
+                    touchPosCache = touch.position;
+                }
+            }
+
+            return;
+        }
 
         if (Cursor.visible) return;
 

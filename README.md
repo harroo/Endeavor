@@ -76,7 +76,9 @@ Now for the more specific options.
 
 `Run In All Directions`: When this is enabled the Player will be able to run sideways and backwards, as apposed to only being able to run forwards.
 
-**Note** You must set the Player Game-Object Layer to "Ignore Raycast". Otherwise it'll fall in an obscure manour. 
+`Touch Mode`: Enable this when using the Android Input Controller.
+
+**Note** You must set the Player Game-Object Layer to "Ignore Raycast". Otherwise it'll fall in an obscure manour.
 
 ### "Looking"
 
@@ -100,6 +102,9 @@ Now for the more specific options.
 
 `Lean Amount`: The level to which the outward zoom will take place. `8` or `16` works rather well. See what you like!
 
+### Android Input Controller
+
+To use this you must add an Event-Trigger to your UI components, then assign Pointer-Down and Pointer-Up Events to their respective methods in the `AndroidInputController`.
 
 ## Others
 
