@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class TopDownPlayerController : MonoBehaviour {
 
+    public float forwardForce, turnForce;
+
     private Rigidbody2D rigidBody;
 
     private void Start () {
@@ -24,18 +26,12 @@ public class TopDownPlayerController : MonoBehaviour {
     private void FixedUpdate () {
 
         if (forward)
-            rigidBody.AddForce(transform.up * PlayerStats.forwardForce);
+            rigidBody.AddForce(transform.up * forwardForce);
 
         if (left)
-            rigidBody.AddTorque(PlayerStats.turnForce);
+            rigidBody.AddTorque(turnForce);
 
         if (right)
-            rigidBody.AddTorque(-PlayerStats.turnForce);
-
-        rigidBody.drag =
-            PlayerStats.defaultDrag + (brake ? PlayerStats.brakePower : 0.0f);
-
-        rigidBody.angularDrag =
-            PlayerStats.defaultAngluarDrag + (brake ? PlayerStats.brakePower : 0.0f);
+            rigidBody.AddTorque(-turnForce);
     }
 }
